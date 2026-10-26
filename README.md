@@ -1,16 +1,26 @@
-# NetPulse — Network Monitoring Appliance
+# NetPulse — ESP32 Network Monitor
 
-NetPulse is a learning and portfolio project combining an ESP32-based network monitor with a Python backend and dashboard.
+NetPulse is a personal electronics and software project to build a network monitoring appliance using an ESP32, an OLED display, and a Python backend.
 
-## Planned features
-- ESP32 firmware: Wi-Fi connection, signal strength (RSSI), reachability, and basic response-time measurements.
-- OLED display: live connection status and measurements.
-- Python backend: receive ESP32 measurements.
-- SQLite: store history.
-- Dashboard: visualise recent and historical network performance.
-- PC-based internet speed tests, kept separate from ESP32 measurements.
+The goal is to monitor Wi-Fi signal strength and connectivity, collect network performance measurements, and visualise historical results through a dashboard.
 
-> Status: initial project scaffold. Hardware features will be implemented and tested as components arrive.
+## Project Status
+
+**Current stage:** Initial project setup
+
+The repository structure and starter code are in place. Hardware integration and feature development are still pending.
+
+## Planned Features
+
+- **Wi-Fi monitoring:** Measure the ESP32's Wi-Fi signal strength (RSSI) and connection status.
+- **Connectivity and latency:** Check reachability and record basic response times.
+- **OLED display:** Show live network status and measurements.
+- **Python backend:** Receive and process ESP32 measurements.
+- **Historical data:** Store measurements in SQLite.
+- **Performance dashboard:** Visualise historical network conditions.
+- **Internet speed tests:** Run download and upload tests from the connected PC.
+
+Features will be implemented and tested incrementally as development progresses.
 
 ## Architecture
 See [`docs/architecture.md`](docs/architecture.md).
