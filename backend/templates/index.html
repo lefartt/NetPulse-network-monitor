@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NetPulse | Network Monitor</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -23,15 +21,8 @@
             border-bottom: 1px solid #2c3b50;
         }
 
-        header h1 {
-            margin: 0 0 6px;
-            color: #60a5fa;
-        }
-
-        header p {
-            margin: 0;
-            color: #aab7ca;
-        }
+        header h1 { margin: 0 0 6px; color: #60a5fa; }
+        header p { margin: 0; color: #aab7ca; }
 
         main {
             max-width: 1100px;
@@ -39,29 +30,20 @@
             padding: 0 20px;
         }
 
-        .status-banner {
-            padding: 18px;
-            margin-bottom: 24px;
-            background: #332719;
-            border: 1px solid #8b6532;
-            border-radius: 10px;
+        .status-banner, .card {
+            padding: 22px;
+            margin-bottom: 18px;
+            background: #172235;
+            border: 1px solid #2c3b50;
+            border-radius: 12px;
         }
 
-        .status-banner strong {
-            color: #fbbf24;
-        }
+        .status-banner strong { color: #fbbf24; }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 18px;
-        }
-
-        .card {
-            padding: 22px;
-            background: #172235;
-            border: 1px solid #2c3b50;
-            border-radius: 12px;
         }
 
         .card h2 {
@@ -76,10 +58,7 @@
             font-weight: bold;
         }
 
-        .description {
-            color: #93a4bb;
-            font-size: 14px;
-        }
+        .description { color: #93a4bb; font-size: 14px; }
 
         footer {
             padding: 24px;
@@ -87,6 +66,9 @@
             color: #8191a8;
             font-size: 13px;
         }
+
+        .connected { color: #4ade80; }
+        .disconnected { color: #f87171; }
     </style>
 </head>
 <body>
@@ -98,10 +80,7 @@
     <main>
         <section class="status-banner">
             <strong>ESP32: Not connected</strong>
-            <p>
-                The dashboard is running, but hardware readings are not
-                available yet.
-            </p>
+            <p>Hardware readings are not available yet.</p>
         </section>
 
         <section class="grid">
@@ -113,26 +92,62 @@
 
             <article class="card">
                 <h2>Internet Connectivity</h2>
-                <div class="value">Not tested</div>
-                <p class="description">No connectivity test has run yet</p>
+                <div class="value" id="connectivity">Checking...</div>
+                <p class="description" id="connectivity-details">
+                    Testing internet access from the backend
+                </p>
             </article>
 
             <article class="card">
-                <h2>Network Latency</h2>
-                <div class="value">-- ms</div>
-                <p class="description">No latency measurement available</p>
+                <h2>HTTP Response Time</h2>
+                <div class="value" id="latency">-- ms</div>
+                <p class="description">Time taken to reach the test endpoint</p>
             </article>
 
             <article class="card">
                 <h2>Internet Speed</h2>
                 <div class="value">-- Mbps</div>
-                <p class="description">No speed test has run yet</p>
+                <p class="description">Speed test not implemented yet</p>
             </article>
         </section>
     </main>
 
-    <footer>
-        NetPulse Personal Project · Initial Dashboard
-    </footer>
+    <footer>NetPulse Personal Project · Live Connectivity Check</footer>
+
+    <script>
+        async function updateNetworkStatus() {
+            const connectivity = document.getElementById("connectivity");
+            const details = document.getElementById("connectivity-details");
+            const latency = document.getElementById("latency");
+
+            try {
+                const response = await fetch("/api/network-check");
+                const data = await response.json();
+
+                if (data.connected) {
+                    connectivity.textContent = "Connected";
+                    connectivity.className = "value connected";
+                    details.textContent =
+                        "External endpoint reachable (HTTP " +
+                        data.status_code + ")";
+                    latency.textContent = data.response_time_ms + " ms";
+                } else {
+                    connectivity.textContent = "Disconnected";
+                    connectivity.className = "value disconnected";
+                    details.textContent =
+                        data.error || "External endpoint could not be reached";
+                    latency.textContent = "-- ms";
+                }
+            } catch (error) {
+                connectivity.textContent = "Check failed";
+                connectivity.className = "value disconnected";
+                details.textContent = "Could not contact the NetPulse backend";
+                latency.textContent = "-- ms";
+            }
+        }
+
+        updateNetworkStatus();
+        setInterval(updateNetworkStatus, 5000);
+    </script>
 </body>
 </html>
