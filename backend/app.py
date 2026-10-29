@@ -1,30 +1,25 @@
-"""NetPulse Python backend starter.
 
-Run with:
-    python app.py
+"""NetPulse Python backend."""
 
-This initial version exposes a local health endpoint. Data ingestion, SQLite,
-speed tests and dashboard features will be added in later steps.
-"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
-app = Flask(__name__)
-
+app = Flask(
+    __name__,
+    template_folder="templates",
+)
 
 @app.get("/health")
 def health():
-    return jsonify({"status": "ok", "service": "netpulse-backend"})
-
+    return jsonify({
+        "status": "ok",
+        "service": "netpulse-backend",
+    })
 
 @app.get("/")
 def index():
-    return (
-        "<h1>NetPulse</h1>"
-        "<p>Backend starter is running.</p>"
-        '<p>Health check: <a href="/health">/health</a></p>'
-    )
-
+    return render_template("index.html")
 
 if __name__ == "__main__":
-    # Local-only by default. Enable LAN access deliberately if needed later.
+    # Keep the development server accessible only from this machine.
     app.run(host="127.0.0.1", port=5000, debug=False)
+

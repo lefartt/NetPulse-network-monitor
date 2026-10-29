@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetPulse | Network Monitor</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #101827;
+            color: #e5e7eb;
+        }
+
+        header {
+            padding: 24px 32px;
+            background: #172235;
+            border-bottom: 1px solid #2c3b50;
+        }
+
+        header h1 {
+            margin: 0 0 6px;
+            color: #60a5fa;
+        }
+
+        header p {
+            margin: 0;
+            color: #aab7ca;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+
+        .status-banner {
+            padding: 18px;
+            margin-bottom: 24px;
+            background: #332719;
+            border: 1px solid #8b6532;
+            border-radius: 10px;
+        }
+
+        .status-banner strong {
+            color: #fbbf24;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            padding: 22px;
+            background: #172235;
+            border: 1px solid #2c3b50;
+            border-radius: 12px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #aab7ca;
+        }
+
+        .value {
+            margin: 12px 0;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #93a4bb;
+            font-size: 14px;
+        }
+
+        footer {
+            padding: 24px;
+            text-align: center;
+            color: #8191a8;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NetPulse</h1>
+        <p>ESP32 Network Monitoring Dashboard</p>
+    </header>
+
+    <main>
+        <section class="status-banner">
+            <strong>ESP32: Not connected</strong>
+            <p>
+                The dashboard is running, but hardware readings are not
+                available yet.
+            </p>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h2>Wi-Fi Signal Strength</h2>
+                <div class="value">-- dBm</div>
+                <p class="description">Waiting for ESP32 data</p>
+            </article>
+
+            <article class="card">
+                <h2>Internet Connectivity</h2>
+                <div class="value">Not tested</div>
+                <p class="description">No connectivity test has run yet</p>
+            </article>
+
+            <article class="card">
+                <h2>Network Latency</h2>
+                <div class="value">-- ms</div>
+                <p class="description">No latency measurement available</p>
+            </article>
+
+            <article class="card">
+                <h2>Internet Speed</h2>
+                <div class="value">-- Mbps</div>
+                <p class="description">No speed test has run yet</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        NetPulse Personal Project · Initial Dashboard
+    </footer>
+</body>
+</html>
